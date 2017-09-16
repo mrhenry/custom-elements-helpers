@@ -18,6 +18,13 @@ export const parseMetaTag = (function parseMetaTag() {
 	};
 }());
 
+export function parseLinkTag(tag) {
+	const rel = tag.getAttribute('rel');
+	const href = tag.getAttribute('href');
+
+	return { rel, href };
+}
+
 export const parseHTML = (function parseHTML() {
 	const parser = new DOMParser();
 
@@ -41,7 +48,10 @@ export const parseHTML = (function parseHTML() {
 		// Get document meta
 		const meta = Array.from(parsed.head.querySelectorAll('meta'), (tag) => parseMetaTag(tag)).filter((t) => !!t);
 
-		return { title, content, meta };
+		// Get document links
+		const links = Array.from(parsed.head.querySelectorAll('link[rel]'), (tag) => parseLinkTag(tag));
+
+		return { title, content, meta, links };
 	};
 }());
 

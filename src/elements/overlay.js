@@ -206,6 +206,14 @@ export default {
 				});
 			};
 
+			const updateLinkTags = (tags) => {
+				const allowed = ['canonical', 'alternate'];
+
+				tags.forEach((tag) => {
+
+				});
+			};
+
 			const renderContent = (content) => {
 				const newClasses = Array.from(content.classList);
 				this.el.className = '';
@@ -230,11 +238,11 @@ export default {
 			};
 
 			return fetch(href, { credentials: 'include' }).then((res) => res.text()).then((html) => {
-				const { title, content, meta } = parseHTML(html, this.el.tagName);
-
-				updateMetaTags(meta);
+				const { title, content, meta, links } = parseHTML(html, this.el.tagName);
 
 				if (content) {
+					updateMetaTags(meta);
+					updateLinkTags(links);
 					renderContent(content);
 					updateTitle(title);
 
