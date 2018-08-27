@@ -31,7 +31,7 @@ const parseResponse = function (res) {
 	return { status, data };
 };
 
-const fetchJSONP = function (url) {
+const fetchJSONP = function (url, paramKey = 'callback') {
 	return new Promise((resolve, reject) => {
 		// Register a global callback
 		// Make sure we have a unique function name
@@ -59,7 +59,7 @@ const fetchJSONP = function (url) {
 
 		const script = document.createElement('script');
 		script.id = callback;
-		script.src = `${url}&callback=${callback}`;
+		script.src = `${url}&${paramKey}=${callback}`;
 		document.head.appendChild(script);
 	});
 };

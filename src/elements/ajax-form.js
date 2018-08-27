@@ -3,7 +3,7 @@ import fetchJSONP from '../util/fetch';
 
 const ajaxForm = {
 	attributes: [
-		{ attribute: 'jsonp', type: 'bool' },
+		{ attribute: 'jsonp', type: 'string' },
 	],
 	controller: class extends BaseController {
 		get action() {
@@ -15,7 +15,7 @@ const ajaxForm = {
 		}
 
 		get method() {
-			if (this.jsonp) {
+			if (typeof this.jsonp !== 'undefined') {
 				return 'GET';
 			}
 
@@ -117,8 +117,8 @@ const ajaxForm = {
 		}
 
 		submit(url, params = {}) {
-			if (this.jsonp) {
-				return fetchJSONP(url);
+			if (typeof this.jsonp !== 'undefined') {
+				return fetchJSONP(url, this.jsonp === '' ? undefined : this.jsonp);
 			}
 
 			return fetch(url, params).then((res) => {

@@ -2,7 +2,11 @@ const noop = function () {};
 
 const generateStringAttributeMethods = function (attribute) {
 	const getter = function () {
-		return this.el.getAttribute(attribute) || undefined;
+		if (this.el.hasAttribute(attribute)) {
+			return this.el.getAttribute(attribute);
+		}
+
+		return undefined;
 	};
 
 	const setter = function (to) {
