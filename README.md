@@ -34,7 +34,7 @@ The `init().render().bind()` cycle from the base controller will only start once
 ##### Javascript
 
 ```js
-import { defineCustomElement, BaseController, AttrMedia as media } from 'custom-elements-helpers';
+import { defineCustomElement, BaseController, media } from 'custom-elements-helpers';
 
 defineCustomElement('foo-bar', {
 	attributes: [ media ],
