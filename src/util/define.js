@@ -228,6 +228,8 @@ const addAttributesToController = function (controller, attributes = []) {
 };
 
 export default function defineCustomElement(tag, options = {}) {
+	console.log(`defining custom element: ${JSON.stringify(tag)}`);
+
 	// Validate tag
 	const isValidTag = tag.split('-').length > 1;
 
