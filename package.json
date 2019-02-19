@@ -1,6 +1,6 @@
 {
   "name": "@mrhenry/custom-elements-helpers",
-  "version": "2.5.8",
+  "version": "2.6.0",
   "description": "A collection of Custom Elements v1 helpers",
   "main": "lib/index.js",
   "module": "src/index.js",
