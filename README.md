@@ -20,7 +20,7 @@ The `media` attribute adds media query support to your custom element.
  - `matchesMedia` - `boolean` - True when the current viewport matches the media query
 
 #### Methods
- 
+
  - `whenMediaMatches()` - Returns a `Promise` that resolves once the media query first is matched
  - `whenMediaUnmatches()` - Returns a `Promise` that resolves once the media query first is unmatched
  - `watchMedia(match, unmatch)` - Takes two callbacks that are called when the media query matches and unmatches, respectively
@@ -34,19 +34,19 @@ The `init().render().bind()` cycle from the base controller will only start once
 ##### Javascript
 
 ```js
-import { defineCustomElement, BaseController, media } from 'custom-elements-helpers';
+import { defineCustomElement, BaseController, media } from '@mrhenry/custom-elements-helpers';
 
 defineCustomElement('foo-bar', {
 	attributes: [ media ],
 	controller: class extends BaseController {
-	
+
 		resolve() {
 			return Promise.all([
 				super.resolve(),
 				this.whenMediaMatches()
 			]);
 		}
-		
+
 	}
 });
 ```
@@ -68,7 +68,7 @@ It adds `is-touch` and `is-hover` classes to your custom element so that you can
  - `touchHover` - Returns `auto` when `touch-hover` is set. Else, returns `false`.
 
 #### Methods
- 
+
   - `enableTouchHover()` - Call this method inside the `bind` method of your custom element
 
 This binds some methods to touchstart & click, so that it works like this:
@@ -82,7 +82,7 @@ It also makes sure the touch device's native `:hover` handling gets blocked prop
 #### Example usage
 
 ```js
-import { defineCustomElement, BaseController, AttrTouchHover as touchHover } from 'custom-elements-helpers';
+import { defineCustomElement, BaseController, AttrTouchHover as touchHover } from '@mrhenry/custom-elements-helpers';
 
 defineCustomElement('foo-bar', {
 	attributes: [ touchHover ],
@@ -90,7 +90,7 @@ defineCustomElement('foo-bar', {
 
 		bind() {
 			this.enableTouchHover();
-			
+
 			return this;
 		}
 
@@ -120,7 +120,7 @@ defineCustomElement('foo-bar', {
   left: 0;
   top: 120%;
   width: 100%;
-} 
+}
 
 .foo-bar:not(.is-touch):hover .foo-bar__show-on-hover,
 .foo-bar.is-hover .foo-bar__show-on-hover {
@@ -144,7 +144,7 @@ With Custom Elements, your controller gets triggered by your browser automatical
 
 ##### Step 1: Resolve
 
-The `resolve` method should return a `Promise`.  
+The `resolve` method should return a `Promise`.
 It allows you to wait for something, preload something, … If you want your controller to kick in immediately, return a resolved `Promise`, by using `return Promise.resolve(true)`.
 
 The default behavior is to wait until `document.readyState === 'complete'`.
@@ -232,12 +232,12 @@ Remove all event listeners that you registered through `on` or `once`.
 
 ### AJAX Form
 
-Wrap AJAX form around a working `<form>` to have it send over AJAX.  
+Wrap AJAX form around a working `<form>` to have it send over AJAX.
 Form submits are supported over `GET`, `POST` and JSONP (with the `jsonp` attribute).
 
 The AJAX form submits all form data to the form's `action`, using the form's `method`.
 
-By default, it looks for an element with class `js-ajax-form-success` to show when the submit was successful. When a form submit is successful, the form will be removed (by default). Likewise, it looks for an element with class `js-ajax-form-error` to show an error message. 
+By default, it looks for an element with class `js-ajax-form-success` to show when the submit was successful. When a form submit is successful, the form will be removed (by default). Likewise, it looks for an element with class `js-ajax-form-error` to show an error message.
 
 Override the default success & error handlers by overriding `onSuccess(res)` and `onError(err)`.
 
@@ -254,20 +254,20 @@ Override the default success & error handlers by overriding `onSuccess(res)` and
 #### Example usage
 
 ```js
-import { defineCustomElement, ajaxForm } from 'custom-elements-helpers';
+import { defineCustomElement, ajaxForm } from '@mrhenry/custom-elements-helpers';
 
 defineCustomElement('my-ajax-form', {
 	attributes: ajaxForm.attributes,
 	controller: class extends ajaxForm.controller {
-	
+
 		onSuccess(res) {
 			// Custom success handler
 		}
-		
+
 		onError(err) {
 			// Custom error handler
 		}
-	
+
 	}
 });
 ```
@@ -293,7 +293,7 @@ You can use key trigger to bind a key to an anchor. It'll look for the `href` at
 #### Example usage
 
 ```js
-import { defineCustomElement, keyTrigger } from 'custom-elements-helpers';
+import { defineCustomElement, keyTrigger } from '@mrhenry/custom-elements-helpers';
 
 defineCustomElement('my-key-trigger', keyTrigger);
 ```
@@ -342,7 +342,7 @@ The `options` object is where the magic happens. Currently, a `attributes` and `
 
 
 ```js
-import { AttrMedia as media } from 'custom-elements-helpers';
+import { AttrMedia as media } from '@mrhenry/custom-elements-helpers';
 
 defineCustomElement('foo-bar', {
   attributes: [
@@ -354,24 +354,24 @@ defineCustomElement('foo-bar', {
 });
 ```
 
-The type `int` parsed `this.intattr` as an integer, so it's an actual number value.  
-The type `boolean` makes sure `this.boolattr` is always boolean.  
+The type `int` parsed `this.intattr` as an integer, so it's an actual number value.
+The type `boolean` makes sure `this.boolattr` is always boolean.
 The type `string` is the default.
 
 ### Events
 
 These methods are currently scoped for internal use only.
 
-Quick heads up:  
-`parse` parses an event name like `click .button`  
+Quick heads up:
+`parse` parses an event name like `click .button`
 `getPath` is a cross-browser equivalent for `e.path` ([This should be made public](https://github.com/mrhenry/custom-elements-helpers/issues/6))
 
 ### HTML
 
 `parseHTML(html, selector = null)` takes a string of HTML and returns an object `{ title, content, meta }`.
 
-The title is the document title.  
-The content is the DOM node(s) matching your selector. If no selector is given, the whole parsed body will be returned.  
+The title is the document title.
+The content is the DOM node(s) matching your selector. If no selector is given, the whole parsed body will be returned.
 The meta key holds an array of `{ name, property, content }` meta tags. This matches with the `<meta name="foo" property="bar" content="baz">`. The `property` attribute is only used by OpenGraph, AFAIK. Other meta tags will only have the `content` attribute. The name `viewport` is blacklisted, to avoid accidentaly setting or removing the viewport metatag.
 
 `renderNodes(content, container)` takes a DOM node `content` and renders its children into `container`. This removes existing content from `container`.
